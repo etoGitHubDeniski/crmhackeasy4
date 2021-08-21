@@ -4,21 +4,9 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
-    [Header("Templates")] 
     [SerializeField] private CannonProjectile _tomatoTemplate;
 
-    [Header("Refs")]
-    [SerializeField] private CannonButton _cannonButton;
-
-    private void Start()
-    {
-        _cannonButton.ButtonReleased += OnCannonButtonRealesed;
-        _cannonButton.enabled = false;
-    }
-
-    public void Enable() => _cannonButton.enabled = true;
-
-    public void OnCannonButtonRealesed(float buttonHoldTime)
+    public void Shoot()
     {
         var projectile = Instantiate(_tomatoTemplate, transform.position, Quaternion.identity);
 
@@ -26,8 +14,8 @@ public class Cannon : MonoBehaviour
             pos: new Vector2(0.5f, 0.5f), 
             eye: Camera.MonoOrStereoscopicEye.Mono).direction.normalized;
 
-        var forceMultiplier = 10f;
+        var force = 10f;
 
-        projectile.AddForce(shotDirection, buttonHoldTime * forceMultiplier);
+        projectile.AddForce(shotDirection, force);
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine.XR.ARFoundation;
 
 public class ARPlaneRaycaster : MonoBehaviour
 {
-    public static Action<Vector3> PlaneRaycasted;
+    public static Action<Vector3, Vector3> PlaneRaycasted;
 
     private ARRaycastManager _raycastManager;
 
@@ -28,7 +28,7 @@ public class ARPlaneRaycaster : MonoBehaviour
         if (hitResults.Count > 0)
         {
             var position = hitResults[0].pose.position;
-            PlaneRaycasted?.Invoke(position);
+            PlaneRaycasted?.Invoke(position, Camera.main.transform.eulerAngles);
         }
     }
 }

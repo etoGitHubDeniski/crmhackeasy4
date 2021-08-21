@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Dart : CannonProjectile
 {
@@ -19,8 +20,13 @@ public class Dart : CannonProjectile
 
     public override void OnHitClient()
     {
-        //anim
-        Destroy(_rigidbody);
+        HitAnimation();
+        _rigidbody.isKinematic = true;
         Destroy(this);
+    }
+
+    private void HitAnimation()
+    {
+        transform.DOPunchRotation(new Vector3() { x = 30 }, 0.35f, 30);
     }
 }
