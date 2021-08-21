@@ -13,20 +13,22 @@ public class Dart : CannonProjectile
 
     private void Update()
     {
-        if (_hitsClient)
-            transform.LookAt(transform.position + _rigidbody.velocity);
+        if (!_hitsClient)
+            transform.LookAt(transform.position + _rigidbody.velocity * 10);
     }
 
 
     public override void OnHitClient()
     {
-        HitAnimation();
+        _hitsClient = true;
         _rigidbody.isKinematic = true;
+
+        GetComponent<Collider>().enabled = false;
+        
+        HitAnimation();
+
         Destroy(this);
     }
 
-    private void HitAnimation()
-    {
-        transform.DOPunchRotation(new Vector3() { x = 30 }, 0.35f, 30);
-    }
+    private void HitAnimation() => transform.DOPunchRotation(new Vector3() { x = 30 }, 0.35f, 30);
 }

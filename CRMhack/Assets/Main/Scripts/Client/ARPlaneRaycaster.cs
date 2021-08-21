@@ -11,10 +11,7 @@ public class ARPlaneRaycaster : MonoBehaviour
 
     private ARRaycastManager _raycastManager;
 
-    private void Awake()
-    {
-        _raycastManager = GetComponent<ARRaycastManager>();
-    }
+    private void Awake() => _raycastManager = GetComponent<ARRaycastManager>();
 
     private void Update()
     {
