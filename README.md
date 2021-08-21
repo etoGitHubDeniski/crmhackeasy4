@@ -6,4 +6,6 @@ API https://github.com/etoGitHubDeniski/crmhackeasy4/tree/main
 
 unity https://github.com/etoGitHubDeniski/crmhackeasy4/tree/relaxing-mode
 
-сайт https://github.com/stasnorman/CRMhackDay1
+сайт http://crmhack.easy4.fun/
+
+исходники сайта https://github.com/stasnorman/CRMhackDay1
