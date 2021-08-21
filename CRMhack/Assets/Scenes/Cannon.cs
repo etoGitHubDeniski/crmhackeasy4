@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCannon : MonoBehaviour
+public class Cannon : MonoBehaviour
 {
     [Header("Templates")] 
     [SerializeField] private CannonProjectile _tomatoTemplate;
@@ -26,6 +26,8 @@ public class PlayerCannon : MonoBehaviour
             pos: new Vector2(0.5f, 0.5f), 
             eye: Camera.MonoOrStereoscopicEye.Mono).direction.normalized;
 
-        projectile.AddForce(shotDirection, buttonHoldTime);
+        var forceMultiplier = 10f;
+
+        projectile.AddForce(shotDirection, buttonHoldTime * forceMultiplier);
     }
 }

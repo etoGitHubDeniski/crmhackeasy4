@@ -25,7 +25,11 @@ public class CannonButton : MonoBehaviour, IPointerUpHandler, IPointerDownHandle
     {
         _holdButtonTime = 0f;
 
-        while (true)
-            _holdButtonTime += Time.deltaTime;    
+        while(true)
+        {
+            _holdButtonTime += Time.deltaTime;
+
+            yield return null;
+        }
     }
 }

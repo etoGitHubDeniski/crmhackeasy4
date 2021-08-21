@@ -20,6 +20,9 @@ public class ClientPlacer : MonoBehaviour
     {
         _placeButton.gameObject.SetActive(false);
         enabled = false;
+
+        ClientPlaced?.Invoke();
+        Debug.Log("Client placed");
     }
 
     private void OnPlaneRaycasteed(Vector3 position) => _clientTransform.position = position;
