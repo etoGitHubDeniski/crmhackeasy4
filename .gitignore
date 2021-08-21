@@ -6,3 +6,7 @@ CRMhack/UserSettings
 CRMhack/UserSettings
 CRMhack/obj
 CRMhack/.vs
+*.csproj
+*.sln
+CRMhack/obj
+CRMhack/.vs
