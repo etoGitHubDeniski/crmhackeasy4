@@ -2,7 +2,7 @@
 
 API https://github.com/etoGitHubDeniski/crmhackeasy4/tree/main
 
-Мобилка https://github.com/etoGitHubDeniski/crmhackeasy4/tree/mobile
+Мобилка https://github.com/etoGitHubDeniski/crmhackeasy4/tree/mobileDay2
 
 unity https://github.com/etoGitHubDeniski/crmhackeasy4/tree/relaxing-mode
 
