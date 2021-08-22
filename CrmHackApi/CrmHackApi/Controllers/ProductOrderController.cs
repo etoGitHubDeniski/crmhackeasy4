@@ -16,7 +16,7 @@ namespace CrmHackApi.Controllers
     {
         private CrmHackEntities _ent { get; set; }
         private List<ProductOrderModel> _productOrder { get; set; }
-        private List<ProductOrderWorkerModel> _productOrderWorker { get; set; }
+        //private List<ProductOrderWorkerModel> _productOrderWorker { get; set; }
 
         public ProductOrderController()
         {
@@ -37,10 +37,11 @@ namespace CrmHackApi.Controllers
             return Request.CreateResponse(System.Net.HttpStatusCode.OK);
         }
 
-        public async Task<HttpResponseMessage> Get()
+        public IHttpActionResult Get()
         {
+            var _productOrderWorker = new List<ProductOrderWorkerModel>();
 
-            _productOrder = await _ent.ProductOrder.Select(x => new ProductOrderModel()
+            _productOrder = _ent.ProductOrder.Select(x => new ProductOrderModel()
             {
                 Id = x.Id,
                 Product = new ProductModel()
@@ -81,17 +82,8 @@ namespace CrmHackApi.Controllers
                     },
                     DateCreated = (DateTime)x.Order.DateCreated
                 }
-            }).ToListAsync();
+            }).ToList();
 
-            await Task.Factory.StartNew(RecommendWorker);
-
-            return Request.CreateResponse(System.Net.HttpStatusCode.OK, _productOrderWorker);
-        }
-
-
-        private async Task RecommendWorker()
-        {
-            _productOrderWorker = new List<ProductOrderWorkerModel>();
 
             foreach (var productOrder in _productOrder)
             {
@@ -107,16 +99,28 @@ namespace CrmHackApi.Controllers
                         .GroupBy(x => x.Id)
                         .OrderByDescending(y => y.Count())
                         .Select(x => x.Key)
-                        .First();
+                        .FirstOrDefault();
 
                     var worker = _ent.Worker.Find(neededId);
-                    string recommended = $"{worker.MiddleName} {worker.FirstName} {worker.LastName}";
-
-                    _productOrderWorker.Add(new ProductOrderWorkerModel()
+                    if (worker != null)
                     {
-                        ProductOrder = productOrder,
-                        RecommendedWorker = recommended
-                    });
+                        string recommended = $"{worker.MiddleName} {worker.FirstName} {worker.LastName}";
+
+                        _productOrderWorker.Add(new ProductOrderWorkerModel()
+                        {
+                            ProductOrder = productOrder,
+                            RecommendedWorker = recommended
+                        });
+                    }
+                    else
+                    {
+                        _productOrderWorker.Add(new ProductOrderWorkerModel()
+                        {
+                            ProductOrder = productOrder,
+                            RecommendedWorker = string.Empty
+                        });
+                    }
+
                 }
                 else
                 {
@@ -131,6 +135,11 @@ namespace CrmHackApi.Controllers
 
                 }
             }
+
+            return Ok(_productOrderWorker);
         }
+
+
+        
     }
 }
