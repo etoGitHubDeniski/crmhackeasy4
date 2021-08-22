@@ -7,8 +7,8 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Title" Type="nvarchar(max)" />
     <Property Name="ScrumEventId" Type="int" />
-    <Property Name="DateStart" Type="datetime" />
-    <Property Name="DateEnd" Type="datetime" />
+    <Property Name="DateStart" Type="nvarchar" MaxLength="60" />
+    <Property Name="DateEnd" Type="nvarchar" MaxLength="60" />
   </EntityType>
   <EntityType Name="CardTask">
     <Key>

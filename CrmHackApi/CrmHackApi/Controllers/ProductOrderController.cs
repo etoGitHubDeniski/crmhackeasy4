@@ -1,4 +1,5 @@
-﻿using CrmHackApi.Models;
+﻿using CrmHackApi.Helper;
+using CrmHackApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,6 +15,8 @@ namespace CrmHackApi.Controllers
     public class ProductOrderController : ApiController
     {
         private CrmHackEntities _ent { get; set; }
+        private List<ProductOrderModel> _productOrder { get; set; }
+        private List<ProductOrderWorkerModel> _productOrderWorker { get; set; }
 
         public ProductOrderController()
         {
@@ -25,7 +28,7 @@ namespace CrmHackApi.Controllers
             var productOrder = new ProductOrder()
             {
                 ProductId = productOrderModel.Product.Id,
-                OrderId = productOrderModel.Order.Id
+                OrderId = PermanentData.Order.Id
             };
 
             _ent.ProductOrder.Add(productOrder);
@@ -37,8 +40,9 @@ namespace CrmHackApi.Controllers
         public async Task<HttpResponseMessage> Get()
         {
 
-            var productOrder = await _ent.ProductOrder.Select(x => new ProductOrderModel()
+            _productOrder = await _ent.ProductOrder.Select(x => new ProductOrderModel()
             {
+                Id = x.Id,
                 Product = new ProductModel()
                 {
                     Id = x.Product.Id,
@@ -77,10 +81,56 @@ namespace CrmHackApi.Controllers
                     },
                     DateCreated = (DateTime)x.Order.DateCreated
                 }
-            }).ToListAsync();           
+            }).ToListAsync();
 
-            return Request.CreateResponse(System.Net.HttpStatusCode.OK, productOrder);
+            await Task.Factory.StartNew(RecommendWorker);
+
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, _productOrderWorker);
         }
 
+
+        private async Task RecommendWorker()
+        {
+            _productOrderWorker = new List<ProductOrderWorkerModel>();
+
+            foreach (var productOrder in _productOrder)
+            {
+                if (productOrder.Order.Worker.Id == null)
+                {
+                    var categoryWorker = _productOrder
+                        .Where(x => x.Product.Category.Id == productOrder.Product.Category.Id)
+                        .Select(x => x.Order.Worker)
+                        .ToList();
+
+                    var neededId = categoryWorker
+                        .Where(x => x.Id != null)
+                        .GroupBy(x => x.Id)
+                        .OrderByDescending(y => y.Count())
+                        .Select(x => x.Key)
+                        .First();
+
+                    var worker = _ent.Worker.Find(neededId);
+                    string recommended = $"{worker.MiddleName} {worker.FirstName} {worker.LastName}";
+
+                    _productOrderWorker.Add(new ProductOrderWorkerModel()
+                    {
+                        ProductOrder = productOrder,
+                        RecommendedWorker = recommended
+                    });
+                }
+                else
+                {
+                    if (productOrder.Order.Status.Id != 1)
+                    {
+                        _productOrderWorker.Add(new ProductOrderWorkerModel()
+                        {
+                            ProductOrder = productOrder,
+                            RecommendedWorker = string.Empty
+                        });
+                    }
+
+                }
+            }
+        }
     }
 }

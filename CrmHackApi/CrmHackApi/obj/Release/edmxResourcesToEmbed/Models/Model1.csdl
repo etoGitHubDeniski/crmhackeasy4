@@ -66,8 +66,8 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ScrumEventId" Type="Int32" />
-    <Property Name="DateStart" Type="DateTime" Precision="3" />
-    <Property Name="DateEnd" Type="DateTime" Precision="3" />
+    <Property Name="DateStart" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="DateEnd" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="ScrumEvent" Relationship="CrmHackModel.FK_Card_ScrumEvent" FromRole="Card" ToRole="ScrumEvent" />
     <NavigationProperty Name="CardTask" Relationship="CrmHackModel.FK_CardTask_Card" FromRole="Card" ToRole="CardTask" />
     <NavigationProperty Name="CardWorker" Relationship="CrmHackModel.FK_CardWorker_Card" FromRole="Card" ToRole="CardWorker" />

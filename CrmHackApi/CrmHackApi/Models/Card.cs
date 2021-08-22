@@ -24,8 +24,8 @@ namespace CrmHackApi.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public Nullable<int> ScrumEventId { get; set; }
-        public Nullable<System.DateTime> DateStart { get; set; }
-        public Nullable<System.DateTime> DateEnd { get; set; }
+        public string DateStart { get; set; }
+        public string DateEnd { get; set; }
     
         public virtual ScrumEvent ScrumEvent { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -31,8 +31,8 @@ namespace CrmHackApi.Controllers
                     Id = x.ScrumEvent.Id,
                     Name = x.ScrumEvent.Name
                 },
-                DateEnd = (DateTime)x.DateEnd,
-                DateStart = (DateTime)x.DateStart
+                DateEnd = x.DateEnd,
+                DateStart = x.DateStart
             }).ToListAsync();
 
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, card);

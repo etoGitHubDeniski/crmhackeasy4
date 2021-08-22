@@ -10,7 +10,7 @@ namespace CrmHackApi.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public ScrumEventModel ScrumEvent { get; set; }
-        public DateTime DateStart { get; set; }
-        public DateTime DateEnd { get; set; }
+        public string DateStart { get; set; }
+        public string DateEnd { get; set; }
     }
 }

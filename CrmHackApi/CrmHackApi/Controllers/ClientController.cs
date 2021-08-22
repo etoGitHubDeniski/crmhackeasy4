@@ -1,6 +1,7 @@
 ﻿using CrmHackApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -34,6 +35,21 @@ namespace CrmHackApi.Controllers
             await _ent.SaveChangesAsync();
 
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, client.Id);
+        }
+
+        public async Task<HttpResponseMessage> Get() 
+        {
+            var clients = await _ent.Client.Select(x => new ClientModel()
+            {
+                Id = x.Id,
+                FirstName = x.FirstName,
+                MiddleName = x.MiddleName,
+                LastName = x.LastName,
+                Email = x.Email,
+                Phone = x.Phone
+            }).ToListAsync();
+
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, clients);
         }
     }
 }

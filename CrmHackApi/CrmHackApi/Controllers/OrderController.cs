@@ -1,4 +1,5 @@
-﻿using CrmHackApi.Models;
+﻿using CrmHackApi.Helper;
+using CrmHackApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +26,16 @@ namespace CrmHackApi.Controllers
             {
                 ClientId = orderModel.Client.Id,
                 DateCreated = DateTime.Now,
-                WorkerId = orderModel.Worker.Id,
+                WorkerId = null,
                 StatusId = 1
             };
 
             _ent.Order.Add(order);
             await _ent.SaveChangesAsync();
 
-            return Request.CreateResponse(System.Net.HttpStatusCode.OK, order.Id);
+            PermanentData.Order = order;
+
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK);
         }
 
         public async Task<HttpResponseMessage> Put([FromBody] OrderModel orderModel)

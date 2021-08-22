@@ -45,5 +45,27 @@ namespace CrmHackApi.Controllers
 
             return Request.CreateResponse(System.Net.HttpStatusCode.BadRequest, "Пользователь не найден");
         }
+        public async Task<HttpResponseMessage> Get()
+        {
+            var workers = await _ent.Worker.Select(x => new WorkerModel()
+            {
+                Id = x.Id,
+                FirstName = x.FirstName,
+                MiddleName = x.MiddleName,
+                LastName = x.LastName,
+                DateBirth = (DateTime)x.DateBirth,
+                Email = x.Email,
+                Login = x.Login,
+                Role = new RoleModel() 
+                {
+                    Id = x.Role.Id,
+                    Name = x.Role.Name
+                },
+                Phone = x.Phone
+            }).ToListAsync();
+
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, workers);
+
+        }
     }
 }
