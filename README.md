@@ -1,10 +1,13 @@
 # easy4
+<center><a href="https://easy4.fun/"><img src="easy4.jpg"/></a></center>
 
-Публикация в интернете: http://crmhack.easy4.fun
+<p>Публикация в интернете: http://crmhack.easy4.fun
 
 Применяемые языки:
 1) PHP 7.5 - Основная логика;
 2) JavaScript - Взаимодействие с покупкой;
+</p>
+
 
 <h2>Рефакторинг кода:</h2>
 <b>index.php</b>
