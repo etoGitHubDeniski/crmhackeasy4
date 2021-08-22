@@ -17,8 +17,9 @@ public class GameProcess : MonoBehaviour
     [SerializeField] private ProgressBar _progressBar;
     [Header("Screen overlay")]
     [SerializeField] private ScreenOverlay _screenOverlay;
+    [Header("Background music player")]
+    [SerializeField] private BackgroundMusic _backgroundMusic;
 
-    
 
     private void Start()
     {
@@ -32,6 +33,10 @@ public class GameProcess : MonoBehaviour
 
         _client.HealthEnds += () =>
         {
+            _screenButton.Clicked -= _cannon.Shoot;
+
+            _backgroundMusic.Stop();
+
             DOTween.Sequence()
                 .Append(_screenOverlay.ShowOverlay())
                 .Append(_screenOverlay.ShowText("Надеюсь, вам стало легче"))
@@ -43,6 +48,7 @@ public class GameProcess : MonoBehaviour
         DOTween.Sequence()
             .SetId(transform)
             .Append(_screenOverlay.ShowText("Расслабьтесь"))
+            .AppendCallback(_backgroundMusic.Play)
             .Append(_screenOverlay.HideOverlay());
     }
 }

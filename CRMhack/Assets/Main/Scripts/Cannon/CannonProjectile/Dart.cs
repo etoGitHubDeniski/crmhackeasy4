@@ -27,6 +27,8 @@ public class Dart : CannonProjectile
         
         HitAnimation();
 
+        SoundEffects.PlayDartHitsSFX();
+
         Destroy(this);
     }
 

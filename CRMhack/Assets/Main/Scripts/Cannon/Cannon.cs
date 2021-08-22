@@ -17,5 +17,7 @@ public class Cannon : MonoBehaviour
         var force = 10f;
 
         projectile.AddForce(shotDirection, force);
+
+        SoundEffects.PlayHitSFX();
     }
 }

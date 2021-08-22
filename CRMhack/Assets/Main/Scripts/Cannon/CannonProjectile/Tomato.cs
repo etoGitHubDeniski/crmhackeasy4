@@ -20,7 +20,9 @@ public class Tomato : CannonProjectile
         var particles = Instantiate(_hitParticles, transform.position, Quaternion.identity);
         
         DOVirtual.DelayedCall(1f, () => Destroy(particles));
-        
+
+        SoundEffects.PlayTomatoHitsSFX();
+
         Destroy(gameObject);
     }
 }
