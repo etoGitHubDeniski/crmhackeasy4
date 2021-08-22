@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class GameProcess : MonoBehaviour
     [SerializeField] private ScreenButton _screenButton;
     [Header("UI")]
     [SerializeField] private ProgressBar _progressBar;
+    [Header("Screen overlay")]
+    [SerializeField] private ScreenOverlay _screenOverlay;
 
     private void Start()
     {
@@ -25,7 +28,19 @@ public class GameProcess : MonoBehaviour
             _screenButton.Clicked += _cannon.Shoot;
         };
 
-        _client.HealthEnds += Application.Unload;
+        _client.HealthEnds += () =>
+        {
+            DOTween.Sequence()
+                .Append(_screenOverlay.ShowOverlay())
+                .Append(_screenOverlay.ShowText("ur ya winning son"))
+                .AppendCallback(Application.Unload);
+        };
+
         _client.ProjectileHitsClient += _progressBar.Fill;
+
+        DOTween.Sequence()
+            .SetId(transform)
+            .Append(_screenOverlay.ShowText("Relax"))
+            .Append(_screenOverlay.HideOverlay());
     }
 }

@@ -11,7 +11,7 @@ public class ProgressBar : MonoBehaviour
     private Tween _fillAnimation;
 
     private void Start() => _progressBarImage.fillAmount = 0;
-
+    
     public void Fill(int maxSteps, int filledSteps)
     {
         _fillAnimation.Kill();
@@ -36,7 +36,7 @@ public class ProgressBar : MonoBehaviour
         DOTween.Sequence()
             .SetId(transform)
             .Append(transform.DOScale(1.3f, animationTime).SetEase(ease))
-            .Join(transform.DOMoveY(transform.position.y + 0.15f, animationTime).SetEase(ease))
+            .Join(transform.DOMoveY(transform.position.y + transform.position.y * 0.05f, animationTime).SetEase(ease))
             .Join(_progressBarImage.DOFade(0, animationTime).SetEase(ease));
     }
 }
