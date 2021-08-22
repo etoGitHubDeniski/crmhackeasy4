@@ -1,3 +1,7 @@
 # easy4
 
-https://github.com/stasnorman/CRMhackDay1
+Публикация в интернете: http://crmhack.easy4.fun
+
+Применяемые языки:
+1) PHP 7.5 - Основная логика;
+2) JavaScript - Взаимодействие с покупкой;
