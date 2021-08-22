@@ -18,6 +18,8 @@ public class GameProcess : MonoBehaviour
     [Header("Screen overlay")]
     [SerializeField] private ScreenOverlay _screenOverlay;
 
+    
+
     private void Start()
     {
         _screenButton.Clicked += _clientPlaser.PlaceClient;
@@ -32,7 +34,7 @@ public class GameProcess : MonoBehaviour
         {
             DOTween.Sequence()
                 .Append(_screenOverlay.ShowOverlay())
-                .Append(_screenOverlay.ShowText("ur ya winning son"))
+                .Append(_screenOverlay.ShowText("Надеюсь, вам стало легче"))
                 .AppendCallback(Application.Unload);
         };
 
@@ -40,7 +42,7 @@ public class GameProcess : MonoBehaviour
 
         DOTween.Sequence()
             .SetId(transform)
-            .Append(_screenOverlay.ShowText("Relax"))
+            .Append(_screenOverlay.ShowText("Расслабьтесь"))
             .Append(_screenOverlay.HideOverlay());
     }
 }
